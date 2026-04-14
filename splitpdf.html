@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple PDF Splitter</title>
+  <title>PDF Splitter (Range)</title>
 </head>
 <body>
 
 <h2>PDF Splitter</h2>
 
 <input type="file" id="pdfFile" accept="application/pdf"><br><br>
-<input type="number" id="pageNumber" placeholder="Enter page number"><br><br>
+
+<input type="number" id="startPage" placeholder="Start page"><br><br>
+<input type="number" id="endPage" placeholder="End page"><br><br>
+
 <button onclick="splitPDF()">Split PDF</button>
 
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
@@ -16,10 +19,16 @@
 <script>
 async function splitPDF() {
   const fileInput = document.getElementById('pdfFile');
-  const pageNumber = parseInt(document.getElementById('pageNumber').value);
+  const startPage = parseInt(document.getElementById('startPage').value);
+  const endPage = parseInt(document.getElementById('endPage').value);
 
   if (!fileInput.files[0]) {
     alert("Please upload a PDF");
+    return;
+  }
+
+  if (!startPage || !endPage || startPage > endPage) {
+    alert("Enter a valid page range");
     return;
   }
 
@@ -27,10 +36,24 @@ async function splitPDF() {
   const arrayBuffer = await file.arrayBuffer();
 
   const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+  const totalPages = pdfDoc.getPageCount();
+
+  if (endPage > totalPages) {
+    alert("End page exceeds total pages (" + totalPages + ")");
+    return;
+  }
+
   const newPdf = await PDFLib.PDFDocument.create();
 
-  const [page] = await newPdf.copyPages(pdfDoc, [pageNumber - 1]);
-  newPdf.addPage(page);
+  // Create array of page indexes (0-based)
+  const pageIndexes = [];
+  for (let i = startPage - 1; i < endPage; i++) {
+    pageIndexes.push(i);
+  }
+
+  const pages = await newPdf.copyPages(pdfDoc, pageIndexes);
+
+  pages.forEach((page) => newPdf.addPage(page));
 
   const pdfBytes = await newPdf.save();
 
@@ -39,7 +62,7 @@ async function splitPDF() {
 
   const a = document.createElement('a');
   a.href = url;
-  a.download = "split.pdf";
+  a.download = `pages_${startPage}_to_${endPage}.pdf`;
   a.click();
 }
 </script>
