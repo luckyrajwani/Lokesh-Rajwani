@@ -3,37 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Video Website</title>
+  <title>My Video Platform</title>
 
   <style>
-    body {
+    * {
       margin: 0;
-      background: #0f0f0f;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0f0f0f;
       color: white;
       font-family: Arial, sans-serif;
     }
 
+    /* Header */
     .header {
-      padding: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      background: #202020;
-      text-align: center;
+      background-color: #202020;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #333;
     }
 
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: red;
+    }
+
+    .search-box input {
+      width: 350px;
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+      background: #121212;
+      color: white;
+      border: 1px solid #444;
+    }
+
+    /* Main container */
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: auto;
       padding: 30px 20px;
     }
 
+    /* Video */
     .video-wrapper {
       position: relative;
       width: 100%;
       padding-bottom: 56.25%;
-      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      border-radius: 14px;
+      background: black;
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
     }
 
     .video-wrapper iframe {
@@ -41,45 +68,183 @@
       width: 100%;
       height: 100%;
       border: none;
+      top: 0;
+      left: 0;
     }
 
-    .title {
+    /* Video info */
+    .video-title {
       margin-top: 20px;
-      font-size: 26px;
+      font-size: 28px;
       font-weight: bold;
     }
 
-    .description {
+    .video-stats {
+      color: #aaaaaa;
       margin-top: 10px;
-      color: #cccccc;
-      line-height: 1.6;
+      font-size: 15px;
     }
+
+    .channel-box {
+      margin-top: 25px;
+      background: #1a1a1a;
+      padding: 18px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .channel-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .channel-avatar {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: red;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+
+    .channel-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .subscribe-btn {
+      background: red;
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .description {
+      margin-top: 25px;
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      line-height: 1.7;
+      color: #dddddd;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 50px;
+      padding: 20px;
+      text-align: center;
+      color: #888;
+      border-top: 1px solid #333;
+    }
+
+    @media(max-width: 700px) {
+      .search-box input {
+        width: 180px;
+      }
+
+      .video-title {
+        font-size: 22px;
+      }
+
+      .channel-box {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
   </style>
 </head>
+
 <body>
 
+  <!-- Header -->
   <div class="header">
-    My Video Platform
+    <div class="logo">MyTube</div>
+
+    <div class="search-box">
+      <input type="text" placeholder="Search">
+    </div>
   </div>
 
+  <!-- Main Content -->
   <div class="container">
 
+    <!-- Video -->
     <div class="video-wrapper">
       <iframe
-        src="<iframe width="560" height="315" src="https://www.youtube.com/embed/GG1_DsScm6U?si=VvIlEPsQwdxC2MvG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>"
+        src="https://www.youtube-nocookie.com/embed/GG1_DsScm6U?si=VvIlEPsQwdxC2MvG"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen>
       </iframe>
     </div>
 
-    <div class="title">
-      My Awesome Video
+    <!-- Title -->
+    <div class="video-title">
+      My Featured Video
     </div>
 
+    <!-- Stats -->
+    <div class="video-stats">
+      125K views • 2 days ago
+    </div>
+
+    <!-- Channel -->
+    <div class="channel-box">
+
+      <div class="channel-info">
+        <div class="channel-avatar">
+          M
+        </div>
+
+        <div>
+          <div class="channel-name">MyTube Channel</div>
+          <div style="color:#aaa; margin-top:4px;">
+            12K subscribers
+          </div>
+        </div>
+      </div>
+
+      <button class="subscribe-btn">
+        Subscribe
+      </button>
+
+    </div>
+
+    <!-- Description -->
     <div class="description">
-      This is my custom website showing a YouTube video.
-      You can replace this text with your own description.
+      Welcome to MyTube. This is a custom video website made using HTML and CSS.
+      You can replace this video with any YouTube embed link and customize the entire layout.
+
+      <br><br>
+
+      Features:
+      <br>
+      • Responsive layout
+      <br>
+      • Embedded YouTube video
+      <br>
+      • Dark mode UI
+      <br>
+      • Channel section
+      <br>
+      • Modern styling
     </div>
 
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    © 2026 MyTube. All rights reserved.
   </div>
 
 </body>
